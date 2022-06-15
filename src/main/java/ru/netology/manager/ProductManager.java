@@ -19,8 +19,8 @@ public class ProductManager {
         return products;
     }
 
-    public Product[] removeById() {
-        Product[] products = repository.removeById();
+    public Product[] removeById(int id) {
+        Product[] products = repository.removeById(id);
         return products;
     }
 
@@ -48,7 +48,5 @@ public class ProductManager {
         } else {
             return false;
         }
-        // или в одну строку:
-        // return product.getName().contains(search);
     }
 }

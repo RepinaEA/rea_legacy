@@ -4,11 +4,6 @@ import ru.netology.domain.Product;
 
 public class ProductRepository {
     private Product[] products = new Product[0];
-    private int id;
-
-    public ProductRepository(int id) {
-        this.id = id;
-    }
 
     public ProductRepository() {
     }
@@ -27,10 +22,8 @@ public class ProductRepository {
         return products;
     }
 
-    public Product[] removeById() {
-        Product[] find = new Product[0];
-        find = findById();
-        if (find.length != 0) {
+    public Product[] removeById(int id) {
+        if (findById(id) != null) {
             int length = products.length - 1;
             Product[] tmp = new Product[length];
             int index = 0;
@@ -40,12 +33,13 @@ public class ProductRepository {
                     index++;
                 }
             }
-            return tmp;
+            products = tmp;
+            return products;
         }
-        return products;
+        throw new NotFoundException("Идентификатор " + id + " не найден");
     }
 
-    public Product[] findById() {
+    public Product[] findById(int id) {
         Product[] tmp = new Product[products.length];
         int index = 0;
         for (Product product : products) {
@@ -57,7 +51,10 @@ public class ProductRepository {
         Product[] find = new Product[index];
         System.arraycopy(tmp, 0, find, 0, find.length);
 
-        return find;
+        if (find.length != 0) {
+            return find;
+        }
+        return null;
     }
 
 }
